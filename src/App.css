@@ -1,236 +1,142 @@
-/* Global Styles */
+/* Import Unbounded font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=inter:wght@400;600&display=swap');
+
+/* Basic reset */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
 }
 
 body {
-  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-  min-height: 100vh;
+  font-family: 'inter', sans-serif;
+  background-color: #f0f4f8;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #333;
-  padding: 20px; /* Adds padding for smaller screens */
+  height: 100vh;
 }
 
-.container {
-  width: 100%;
-  max-width: 700px;
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbox {
+  width: 400px;
+  height: 600px;
   background-color: white;
-  border-radius: 12px;
-  padding: 40px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  background-color: #007bff;
+  color: white;
   text-align: center;
-  max-height: 90vh; /* Prevents overflow */
+  padding: 20px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.messages {
+  flex: 1;
+  padding: 20px;
   overflow-y: auto;
-  animation: fadeIn 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.bot-message {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  max-width: 100%; /* Unbounded width for dynamic messages */
+  align-self: flex-start;
+  word-wrap: break-word; /* Ensures long text wraps inside the bubble */
 }
 
-.heading {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #2a6af5;
+.user-message {
+  background-color: #f1f0f0;
+  color: black;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  max-width: 100%; /* Unbounded width for dynamic messages */
+  align-self: flex-end;
+  word-wrap: break-word; /* Ensures long text wraps inside the bubble */
+}
+
+.code-block {
+  background-color: #282c34;
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: auto; /* Enables horizontal scrolling for larger code snippets */
+  white-space: pre-wrap; /* Ensures code breaks lines responsibly */
+  max-width: 100%;
   margin-bottom: 10px;
 }
 
-.subheading {
-  font-size: 1.2rem;
-  color: #6c757d;
-  margin-bottom: 30px;
+.inline-code {
+  background-color: #e8e8e8;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.textarea {
-  width: 100%;
-  height: 160px;
-  border: 2px solid #e4e4e4;
-  border-radius: 8px;
-  padding: 16px;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
+.input-container {
+  display: flex;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e6e6e6;
 }
 
-.textarea:focus {
-  border-color: #2a6af5;
-  box-shadow: 0 0 10px rgba(42, 106, 245, 0.2);
+.input-box {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #e6e6e6;
+  margin-right: 10px;
   outline: none;
+  resize: none; /* Disable textarea resizing */
+  font-family: 'Unbounded', sans-serif;
 }
 
-.button {
-  margin-top: 20px;
-  background-color: #2a6af5;
+.submit-button {
+  background-color: #007bff;
   color: white;
-  padding: 12px 25px;
-  font-size: 1.1rem;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  font-weight: 600;
+  transition: background-color 0.3s ease;
+  font-family: 'Unbounded', sans-serif;
 }
 
-.button:hover {
-  background-color: #1d53c2;
-}
-
-.button-disabled {
-  opacity: 0.7;
+.submit-button.button-disabled {
+  background-color: #a9a9a9;
   cursor: not-allowed;
 }
 
-.answer-container {
-  margin-top: 40px;
-  background-color: #f7f8fc;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  max-height: 40vh;
-  overflow-y: auto;
+.submit-button:hover {
+  background-color: #0056b3;
 }
 
-.answer-heading {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #2a6af5;
-  margin-bottom: 20px;
-}
-
-.answer-content {
-  font-size: 1rem;
-  color: #444;
-  text-align: left;
-  line-height: 1.6;
-}
-
-/* Media Queries for Mobile and Tablet Responsiveness */
-@media (max-width: 1024px) {
-  .container {
-    padding: 30px;
+@media screen and (max-width: 600px) {
+  .chatbox {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 
-  .heading {
-    font-size: 2.2rem;
-  }
-
-  .subheading {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-  }
-
-  .textarea {
-    height: 140px;
-  }
-
-  .button {
-    padding: 10px 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    padding: 15px;
-  }
-
-  .container {
-    padding: 25px;
-  }
-
-  .heading {
-    font-size: 2rem;
-  }
-
-  .subheading {
-    font-size: 1rem;
-  }
-
-  .textarea {
-    height: 130px;
-  }
-
-  .button {
-    font-size: 1rem;
+  .code-block {
+    font-size: 14px;
     padding: 10px;
-  }
-
-  .answer-container {
-    max-height: 35vh; /* Adjusts height on tablets */
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    padding: 10px;
-  }
-
-  .container {
-    padding: 20px;
-  }
-
-  .heading {
-    font-size: 1.8rem;
-  }
-
-  .subheading {
-    font-size: 0.9rem;
-  }
-
-  .textarea {
-    height: 120px;
-    font-size: 1rem;
-  }
-
-  .button {
-    font-size: 0.9rem;
-    padding: 8px;
-  }
-
-  .answer-heading {
-    font-size: 1.3rem;
-  }
-
-  .answer-content {
-    font-size: 0.9rem;
-  }
-
-  .answer-container {
-    max-height: 30vh; /* Smaller height for mobile */
-  }
-}
-
-@media (max-width: 360px) {
-  .heading {
-    font-size: 1.6rem;
-  }
-
-  .subheading {
-    font-size: 0.8rem;
-  }
-
-  .textarea {
-    height: 100px;
-  }
-
-  .button {
-    font-size: 0.8rem;
-    padding: 6px;
-  }
-
-  .answer-container {
-    padding: 15px;
-    max-height: 25vh;
   }
 }

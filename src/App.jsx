@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css";
+import "./App.css"; // Include your custom CSS file
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 
@@ -10,6 +10,7 @@ function App() {
 
   const API_KEY = "AIzaSyC2EW8emCr12f12bKPkm_Y41tSl5QnOCQ0"; // Hardcoded API key
 
+  
   async function generateAnswer(e) {
     setGeneratingAnswer(true);
     e.preventDefault();
@@ -30,39 +31,37 @@ function App() {
       console.log(error);
       setAnswer("An error occurred. Please try again.");
     }
-
     setGeneratingAnswer(false);
   }
 
   return (
-    <div className="container">
-      <form onSubmit={generateAnswer} className="form-container">
-        <h1 className="heading">AI Assistant</h1>
-        <p className="subheading">Your personal AI-powered assistant</p>
-        <textarea
-          required
-          className="textarea"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask me anything..."
-        ></textarea>
-        <button
-          type="submit"
-          className={`button ${generatingAnswer ? 'button-disabled' : ''}`}
-          disabled={generatingAnswer}
-        >
-          {generatingAnswer ? "Generating..." : "Generate Answer"}
-        </button>
-      </form>
-      <div className="answer-container">
-        {answer && (
-          <>
-            <h2 className="answer-heading">Your Answer</h2>
-            <div className="answer-content">
-              <ReactMarkdown>{answer}</ReactMarkdown>
-            </div>
-          </>
-        )}
+    <div className="chat-container">
+      <div className="chatbox">
+        <div className="header">
+          <h1 className="heading">AI Assistant</h1>
+          <p className="subheading">Your personal AI-powered assistant</p>
+        </div>
+        <div className="messages">
+          <div className="bot-message">How can I help you?</div>
+          <div className="user-message">{question}</div>
+          {answer &&  <div className="bot-message"><ReactMarkdown>{answer}</ReactMarkdown></div>}
+        </div>
+        <form onSubmit={generateAnswer} className="input-container">
+          <textarea
+            required
+            className="input-box"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder="Type your message..."
+          ></textarea>
+          <button
+            type="submit"
+            className={`submit-button ${generatingAnswer ? 'button-disabled' : ''}`}
+            disabled={generatingAnswer}
+          >
+            {generatingAnswer ? "Generating..." : "Send"}
+          </button>
+        </form>
       </div>
     </div>
   );
